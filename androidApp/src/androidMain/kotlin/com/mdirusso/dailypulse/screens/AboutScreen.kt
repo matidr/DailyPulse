@@ -1,4 +1,4 @@
-package com.mdirusso.dailypulse
+package com.mdirusso.dailypulse.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mdirusso.dailypulse.Platform
 
 @Composable
 fun AboutScreen() {

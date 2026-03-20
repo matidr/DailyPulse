@@ -45,6 +45,7 @@ This app follows **Clean Architecture** principles with a clear separation betwe
 - 🍎 **SwiftUI** — iOS UI
 - 🏗️ **MVI** — Android presentation pattern
 - 🧩 **Hilt** — Dependency injection (Android)
+- 🖼️ **Coil** — Image loading (Android)
 - 🏛️ **Clean Architecture** — Separation of concerns
 
 ---
