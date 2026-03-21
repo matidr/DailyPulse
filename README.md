@@ -44,7 +44,7 @@ This app follows **Clean Architecture** principles with a clear separation betwe
 - 🖌️ **Jetpack Compose** — Android UI
 - 🍎 **SwiftUI** — iOS UI
 - 🏗️ **MVI** — Android presentation pattern
-- 🧩 **Hilt** — Dependency injection (Android)
+- 🧩 **Koin** — Dependency injection (shared)
 - 🌐 **Ktor** — Networking (shared)
 - 🕐 **kotlinx-datetime** — Date/time handling (shared)
 - 🖼️ **Coil** — Image loading (Android)

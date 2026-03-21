@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +13,7 @@ import com.mdirusso.dailypulse.articles.ArticlesViewModel
 import com.mdirusso.dailypulse.screens.AboutScreen
 import com.mdirusso.dailypulse.screens.ArticlesScreen
 import com.mdirusso.dailypulse.screens.Screens
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppScaffold() {
@@ -40,7 +40,7 @@ fun AppNavHost(
         modifier = modifier
     ) {
         composable<Screens.Articles> {
-            val viewmodel: ArticlesViewModel = viewModel { ArticlesViewModel(Secrets.newsApiKey) }
+            val viewmodel: ArticlesViewModel = koinViewModel()
             ArticlesScreen(
                 onAboutButtonScreen = { navController.navigate(Screens.About) },
                 articlesViewModel = viewmodel

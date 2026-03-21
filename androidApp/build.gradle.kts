@@ -22,6 +22,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(compose.materialIconsExtended)
             implementation(libs.androidx.navigation.compose)
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
             implementation(libs.kotlinx.serialization.json)
