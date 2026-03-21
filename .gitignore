@@ -5,6 +5,8 @@
 xcuserdata
 !src/**/build/
 local.properties
+iosApp/iosApp/Secrets.swift
+androidApp/src/androidMain/kotlin/com/mdirusso/dailypulse/Secrets.kt
 .idea
 .DS_Store
 captures

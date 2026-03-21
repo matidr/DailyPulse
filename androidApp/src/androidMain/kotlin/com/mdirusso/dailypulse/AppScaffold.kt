@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +16,7 @@ import com.mdirusso.dailypulse.screens.ArticlesScreen
 import com.mdirusso.dailypulse.screens.Screens
 
 @Composable
-fun AppScaffold(articlesViewModel: ArticlesViewModel) {
+fun AppScaffold() {
     val navController = rememberNavController()
 
     Scaffold {
@@ -24,7 +25,6 @@ fun AppScaffold(articlesViewModel: ArticlesViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = it.calculateBottomPadding()),
-            articlesViewModel
         )
     }
 }
@@ -33,7 +33,6 @@ fun AppScaffold(articlesViewModel: ArticlesViewModel) {
 fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    articlesViewModel: ArticlesViewModel
 ) {
     NavHost(
         navController = navController,
@@ -41,9 +40,10 @@ fun AppNavHost(
         modifier = modifier
     ) {
         composable<Screens.Articles> {
+            val viewmodel: ArticlesViewModel = viewModel { ArticlesViewModel(Secrets.newsApiKey) }
             ArticlesScreen(
                 onAboutButtonScreen = { navController.navigate(Screens.About) },
-                articlesViewModel = articlesViewModel
+                articlesViewModel = viewmodel
             )
         }
         composable<Screens.About> {

@@ -84,7 +84,7 @@ extension ArticlesScreen {
         @Published var articlesState: ArticlesState
         
         init() {
-            articlesViewModel = ArticlesViewModel()
+            articlesViewModel = ArticlesViewModel(apiKey: Secrets.newsApiKey)
             articlesState = articlesViewModel.articlesState.value
         }
         

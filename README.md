@@ -45,6 +45,8 @@ This app follows **Clean Architecture** principles with a clear separation betwe
 - 🍎 **SwiftUI** — iOS UI
 - 🏗️ **MVI** — Android presentation pattern
 - 🧩 **Hilt** — Dependency injection (Android)
+- 🌐 **Ktor** — Networking (shared)
+- 🕐 **kotlinx-datetime** — Date/time handling (shared)
 - 🖼️ **Coil** — Image loading (Android)
 - 🧭 **Navigation Compose** — Type-safe navigation (Android)
 - 🔗 **SKIE** — Enhanced Swift/Kotlin interop for KMP
@@ -58,6 +60,25 @@ This app follows **Clean Architecture** principles with a clear separation betwe
 
 - **Android Studio Hedgehog+** with Kotlin Multiplatform plugin
 - **Xcode 15+** (for iOS)
+
+### Secrets setup
+
+API keys are not committed to the repo. Before running, create your secrets files from the provided examples:
+
+**Android:**
+```bash
+cp androidApp/src/androidMain/kotlin/com/mdirusso/dailypulse/Secrets.kt.example \
+   androidApp/src/androidMain/kotlin/com/mdirusso/dailypulse/Secrets.kt
+```
+
+**iOS:**
+```bash
+cp iosApp/iosApp/Secrets.swift.example iosApp/iosApp/Secrets.swift
+```
+
+Then replace `your_api_key_here` with your [NewsAPI](https://newsapi.org) key in both files.
+
+---
 
 ### Android
 

@@ -8,14 +8,13 @@ import androidx.activity.viewModels
 import com.mdirusso.dailypulse.articles.ArticlesViewModel
 
 class MainActivity : ComponentActivity() {
-    val articlesViewModel: ArticlesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         Platform().logSystemInfo()
         setContent {
-            AppScaffold(articlesViewModel = articlesViewModel)
+            AppScaffold()
         }
     }
 }
