@@ -46,6 +46,7 @@ This app follows **Clean Architecture** principles with a clear separation betwe
 - 🏗️ **MVI** — Android presentation pattern
 - 🧩 **Hilt** — Dependency injection (Android)
 - 🖼️ **Coil** — Image loading (Android)
+- 🧭 **Navigation Compose** — Type-safe navigation (Android)
 - 🔗 **SKIE** — Enhanced Swift/Kotlin interop for KMP
 - 🏛️ **Clean Architecture** — Separation of concerns
 
