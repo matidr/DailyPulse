@@ -49,6 +49,7 @@ This app follows **Clean Architecture** principles with a clear separation betwe
 - 🕐 **kotlinx-datetime** — Date/time handling (shared)
 - 🖼️ **Coil** — Image loading (Android)
 - 🧭 **Navigation Compose** — Type-safe navigation (Android)
+- 🗄️ **SQLDelight** — Local database / caching (shared)
 - 🔗 **SKIE** — Enhanced Swift/Kotlin interop for KMP
 - 🏛️ **Clean Architecture** — Separation of concerns
 
