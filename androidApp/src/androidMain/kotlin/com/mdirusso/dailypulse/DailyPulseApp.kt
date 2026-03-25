@@ -1,6 +1,7 @@
 package com.mdirusso.dailypulse
 
 import android.app.Application
+import com.mdirusso.dailypulse.di.databaseModule
 import com.mdirusso.dailypulse.di.sharedModules
 import com.mdirusso.dailypulse.di.viewModelsModule
 import org.koin.android.ext.koin.androidContext
@@ -11,7 +12,7 @@ class DailyPulseApp : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@DailyPulseApp)
-            modules(sharedModules(Secrets.newsApiKey) + viewModelsModule)
+            modules(sharedModules(Secrets.newsApiKey) + viewModelsModule + databaseModule)
         }
     }
 }
