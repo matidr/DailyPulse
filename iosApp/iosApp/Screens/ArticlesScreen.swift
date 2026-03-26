@@ -14,19 +14,19 @@ struct ArticlesScreen: View {
         VStack {
             AppBar()
             
-            if viewModel.articlesState is ArticlesState.Loading {
-                Loader()
-            }
-            
             if let error = viewModel.articlesState as? ArticlesState.Error {
                 ErrorMessage(message: error.errorMessage)
             }
             
             if let success = viewModel.articlesState as? ArticlesState.Success {
-                ScrollView {
-                    LazyVStack(spacing: 10) {
-                        ForEach(success.articles, id: \.self) { article in
-                            ArticleItemView(article: article)
+                if success.isRefreshing && success.articles.isEmpty {
+                    Loader()
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 10) {
+                            ForEach(success.articles, id: \.self) { article in
+                                ArticleItemView(article: article)
+                            }
                         }
                     }
                 }
@@ -95,5 +95,7 @@ extension ArticlesScreen {
                 }
             }
         }
+        
+
     }
 }

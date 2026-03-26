@@ -7,7 +7,7 @@ This project focuses on **sharing business logic across Android and iOS** while 
 
 ## ✨ Features
 
-- 📰 **Articles Feed** — Browse a list of daily news articles.
+- 📰 **Articles Feed** — Browse a list of daily news articles with pull-to-refresh support.
 - 🤝 **Shared Domain & Data** — Business logic, use cases, and data sources are shared between Android and iOS via a common Kotlin module.
 - 📱 **Native Android UI** — Built with Jetpack Compose following MVI architecture.
 - 🍎 **Native iOS UI** — Built with SwiftUI.

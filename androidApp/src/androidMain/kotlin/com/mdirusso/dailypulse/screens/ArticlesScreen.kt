@@ -19,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,9 +43,10 @@ fun ArticlesScreen(articlesViewModel: ArticlesViewModel, onAboutButtonScreen: ()
     Column {
         AppBar(onAboutButtonScreen)
         when (articlesState.value) {
-            ArticlesState.Loading -> Loader()
             is ArticlesState.Error -> ErrorMessage((articlesState.value as ArticlesState.Error).errorMessage)
-            is ArticlesState.Success -> ArticlesListView((articlesState.value as ArticlesState.Success).articles)
+            is ArticlesState.Success -> ArticlesListView((articlesState.value) as ArticlesState.Success) {
+                articlesViewModel.getArticles(true)
+            }
         }
     }
 }
@@ -60,10 +62,12 @@ fun AppBar(onAboutButtonScreen: () -> Unit) {
 }
 
 @Composable
-fun ArticlesListView(articles: List<Article>) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(articles) { article ->
-            ArticleItemView(article = article)
+fun ArticlesListView(articlesState: ArticlesState.Success, onRefresh: () -> Unit) {
+    PullToRefreshBox(isRefreshing = articlesState.isRefreshing, onRefresh = onRefresh) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(articlesState.articles) { article ->
+                ArticleItemView(article = article)
+            }
         }
     }
 }
@@ -88,17 +92,6 @@ fun ArticleItemView(article: Article) {
             text = article.date, style = TextStyle(color = Color.Gray), modifier = Modifier.align(
                 Alignment.End
             )
-        )
-    }
-}
-
-@Composable
-fun Loader() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(
-            modifier = Modifier.width(64.dp),
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            trackColor = MaterialTheme.colorScheme.secondary
         )
     }
 }

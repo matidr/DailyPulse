@@ -5,15 +5,25 @@ class ArticlesRepository(
     private val articlesService: ArticlesService
 ) {
 
-    suspend fun getArticles(): List<ArticleDto> {
+    suspend fun getArticles(forceFetch: Boolean): List<ArticleDto> {
+        if (forceFetch) {
+            localDataSource.clearArticles()
+            return fetchArticles()
+        }
+
         val articlesDb = localDataSource.getAllArticles()
 
         if (articlesDb.isEmpty()) {
-            val fetchedArticles = articlesService.fetchArticles()
-            localDataSource.insertArticles(fetchedArticles)
-            return fetchedArticles
+
+            return fetchArticles()
         }
 
         return articlesDb
+    }
+
+    private suspend fun fetchArticles(): List<ArticleDto> {
+        val fetchedArticles = articlesService.fetchArticles()
+        localDataSource.insertArticles(fetchedArticles)
+        return fetchedArticles
     }
 }
