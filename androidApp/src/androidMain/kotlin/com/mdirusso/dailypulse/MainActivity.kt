@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import com.mdirusso.dailypulse.articles.ArticlesViewModel
+import com.mdirusso.dailypulse.articles.presentation.ArticlesViewModel
 
 class MainActivity : ComponentActivity() {
 

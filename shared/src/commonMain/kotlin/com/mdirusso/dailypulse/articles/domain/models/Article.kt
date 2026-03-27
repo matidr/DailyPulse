@@ -1,4 +1,4 @@
-package com.mdirusso.dailypulse.articles
+package com.mdirusso.dailypulse.articles.domain.models
 
 data class Article(
     val title: String,

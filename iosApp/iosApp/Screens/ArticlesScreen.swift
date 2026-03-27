@@ -6,19 +6,20 @@
 //
 import SwiftUI
 import Shared
+import Combine
 
 struct ArticlesScreen: View {
     @ObservedObject private(set) var viewModel: ArticlesViewModelWrapper
-    
+
     var body: some View {
         VStack {
             AppBar()
-            
-            if let error = viewModel.articlesState as? ArticlesState.Error {
+
+            if let error = viewModel.state as? ArticlesState.Error {
                 ErrorMessage(message: error.errorMessage)
             }
-            
-            if let success = viewModel.articlesState as? ArticlesState.Success {
+
+            if let success = viewModel.state as? ArticlesState.Success {
                 if success.isRefreshing && success.articles.isEmpty {
                     Loader()
                 } else {
@@ -76,26 +77,32 @@ struct ErrorMessage: View {
     }
 }
 
-extension ArticlesScreen {
-    @MainActor
-    class ArticlesViewModelWrapper: ObservableObject {
-        let articlesViewModel: ArticlesViewModel
-        
-        @Published var articlesState: ArticlesState
-        
-        init() {
-            articlesViewModel = ArticlesInjector().articlesViewModel
-            articlesState = articlesViewModel.articlesState.value
-        }
-        
-        func startObserving() {
-            Task {
-                for await state in articlesViewModel.articlesState {
-                    self.articlesState = state
-                }
+@MainActor
+class ArticlesViewModelWrapper: ObservableObject {
+    let articlesViewModel: ArticlesViewModel
+
+    @Published var state: ArticlesState
+    let effectPublisher = PassthroughSubject<ArticlesEffect, Never>()
+
+    init() {
+        articlesViewModel = ArticlesInjector().articlesViewModel
+        state = articlesViewModel.state.value
+    }
+
+    func startObserving() {
+        Task {
+            for await state in articlesViewModel.state {
+                self.state = state
             }
         }
-        
+        Task {
+            for await effect in articlesViewModel.effect {
+                effectPublisher.send(effect)
+            }
+        }
+    }
 
+    func dispatchIntent(_ intent: ArticlesIntent) {
+        articlesViewModel.dispatchIntent(intent: intent)
     }
 }

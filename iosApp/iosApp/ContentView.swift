@@ -2,26 +2,32 @@ import SwiftUI
 import Shared
 
 struct ContentView: View {
-    @State private var shouldOpenAbout = false
-    
+    @StateObject private var viewModel = ArticlesViewModelWrapper()
+    @State private var showAbout = false
+
     var body: some View {
-        let articlesScreen = ArticlesScreen(viewModel: .init())
         NavigationStack {
-           articlesScreen
+            ArticlesScreen(viewModel: viewModel)
                 .toolbar {
                     ToolbarItem {
                         Button {
-                            shouldOpenAbout = true
+                            viewModel.dispatchIntent(ArticlesIntent.ShowAbout())
                         } label: {
                             Label("About", systemImage: "info.circle").labelStyle(.titleAndIcon)
                         }
-                        .popover(isPresented: $shouldOpenAbout) {
-                            AboutScreen()
-                        }
                     }
                 }
-        }.refreshable {
-            articlesScreen.viewModel.articlesViewModel.getArticles(forceFetch: true)
+        }
+        .refreshable {
+            viewModel.dispatchIntent(ArticlesIntent.RefreshArticles())
+        }
+        .popover(isPresented: $showAbout) {
+            AboutScreen()
+        }
+        .onReceive(viewModel.effectPublisher) { effect in
+            if effect is ArticlesEffect.NavigateToAbout {
+                showAbout = true
+            }
         }
     }
 }

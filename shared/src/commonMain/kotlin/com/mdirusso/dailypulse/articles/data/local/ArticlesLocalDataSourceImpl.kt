@@ -1,13 +1,14 @@
-package com.mdirusso.dailypulse.articles
+package com.mdirusso.dailypulse.articles.data.local
 
+import com.mdirusso.dailypulse.articles.data.dto.ArticleDto
 import mdirusso.dailypulse.db.DailyPulseDatabase
 
-class ArticlesDataSource(private val database: DailyPulseDatabase) {
+class ArticlesLocalDataSourceImpl(private val database: DailyPulseDatabase) : ArticlesLocalDataSource {
 
-    fun getAllArticles(): List<ArticleDto> =
+    override fun getAllArticles(): List<ArticleDto> =
         database.dailyPulseDatabaseQueries.selectAllArticles(::mapToArticleDto).executeAsList()
 
-    fun insertArticles(articles: List<ArticleDto>) {
+    override fun insertArticles(articles: List<ArticleDto>) {
         database.dailyPulseDatabaseQueries.transaction {
             articles.forEach { article ->
                 insertArticle(article)
@@ -15,7 +16,7 @@ class ArticlesDataSource(private val database: DailyPulseDatabase) {
         }
     }
 
-    fun clearArticles() = database.dailyPulseDatabaseQueries.removeAllArticles()
+    override fun clearArticles() = database.dailyPulseDatabaseQueries.removeAllArticles()
 
     private fun insertArticle(article: ArticleDto) {
         database.dailyPulseDatabaseQueries.insertArticle(

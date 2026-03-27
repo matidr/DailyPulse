@@ -1,6 +1,6 @@
 package com.mdirusso.dailypulse.di
 
-import com.mdirusso.dailypulse.articles.ArticlesViewModel
+import com.mdirusso.dailypulse.articles.presentation.ArticlesViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
