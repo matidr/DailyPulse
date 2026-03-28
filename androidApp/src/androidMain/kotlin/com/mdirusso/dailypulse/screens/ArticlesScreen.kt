@@ -56,16 +56,16 @@ fun ArticlesScreen(
 
     Column {
         AppBar(
-            onAboutClick = { articlesViewModel.dispatchIntent(ArticlesIntent.ShowAbout) },
+            onAboutClick = { articlesViewModel.dispatchIntent(ArticlesIntent.OnAboutClicked) },
             onSourcesClick = {
                 articlesViewModel.dispatchIntent(
-                    ArticlesIntent.ShowSources
+                    ArticlesIntent.OnSourcesClicked
                 )
             })
         when (val state = articlesState.value) {
             is ArticlesState.Error -> ErrorMessage(state.errorMessage)
             is ArticlesState.Success -> ArticlesListView(state) {
-                articlesViewModel.dispatchIntent(ArticlesIntent.RefreshArticles)
+                articlesViewModel.dispatchIntent(ArticlesIntent.OnRefreshSwiped)
             }
         }
     }

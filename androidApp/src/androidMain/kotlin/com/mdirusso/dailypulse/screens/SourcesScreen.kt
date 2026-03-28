@@ -47,7 +47,7 @@ fun SourcesScreen(viewModel: SourcesViewModel, onBackClicked: () -> Unit) {
         when (val state = sourcesState.value) {
             is SourcesState.Error -> ErrorMessage(state.errorMessage)
             is SourcesState.Success -> SourcesListView(state.sources, state.isRefreshing) {
-                viewModel.dispatchIntent(SourcesIntent.RefreshSources)
+                viewModel.dispatchIntent(SourcesIntent.OnRefreshSwiped)
             }
         }
     }

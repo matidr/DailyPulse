@@ -9,14 +9,14 @@ class ArticlesViewModel(private val useCase: ArticlesUseCase) :
     ) {
 
     init {
-        dispatchIntent(ArticlesIntent.GetArticles)
+        dispatchIntent(ArticlesIntent.OnScreenLoaded)
     }
 
     override fun intentToAction(intent: ArticlesIntent): ArticlesAction = when (intent) {
-        ArticlesIntent.GetArticles -> ArticlesAction.GetArticles(forceFetch = false)
-        ArticlesIntent.RefreshArticles -> ArticlesAction.GetArticles(forceFetch = true)
-        ArticlesIntent.ShowAbout -> ArticlesAction.ShowAbout
-        ArticlesIntent.ShowSources -> ArticlesAction.ShowSources
+        ArticlesIntent.OnScreenLoaded -> ArticlesAction.GetArticles(forceFetch = false)
+        ArticlesIntent.OnRefreshSwiped -> ArticlesAction.GetArticles(forceFetch = true)
+        ArticlesIntent.OnAboutClicked -> ArticlesAction.ShowAbout
+        ArticlesIntent.OnSourcesClicked -> ArticlesAction.ShowSources
     }
 
     override fun handleAction(action: ArticlesAction) {

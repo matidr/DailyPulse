@@ -9,12 +9,12 @@ class SourcesViewModel(private val useCase: SourcesUseCase) :
     ) {
 
     init {
-        dispatchIntent(SourcesIntent.GetSources)
+        dispatchIntent(SourcesIntent.OnScreenLoaded)
     }
 
     override fun intentToAction(intent: SourcesIntent): SourcesAction = when (intent) {
-        SourcesIntent.GetSources -> SourcesAction.GetSources(forceFetch = false)
-        SourcesIntent.RefreshSources -> SourcesAction.GetSources(forceFetch = true)
+        SourcesIntent.OnScreenLoaded -> SourcesAction.GetSources(forceFetch = false)
+        SourcesIntent.OnRefreshSwiped -> SourcesAction.GetSources(forceFetch = true)
     }
 
     override fun handleAction(action: SourcesAction) {

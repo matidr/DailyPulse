@@ -15,11 +15,10 @@ struct ArticlesScreen: View {
         VStack {
             AppBar()
 
-            if let error = viewModel.state as? ArticlesState.Error {
+            switch viewModel.state {
+            case let error as ArticlesState.Error:
                 ErrorMessage(message: error.errorMessage)
-            }
-
-            if let success = viewModel.state as? ArticlesState.Success {
+            case let success as ArticlesState.Success:
                 if success.isRefreshing && success.articles.isEmpty {
                     Loader()
                 } else {
@@ -31,6 +30,8 @@ struct ArticlesScreen: View {
                         }
                     }
                 }
+            default:
+                EmptyView()
             }
         }.onAppear {
             self.viewModel.startObserving()
