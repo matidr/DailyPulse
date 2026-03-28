@@ -4,7 +4,7 @@ import com.mdirusso.dailypulse.sources.data.dto.SourceDto
 import com.mdirusso.dailypulse.sources.data.local.SourcesLocalDataSource
 import com.mdirusso.dailypulse.sources.data.remote.SourcesRemoteDataSource
 import com.mdirusso.dailypulse.sources.domain.SourcesRepository
-import mdirusso.dailypulse.db.Source
+import com.mdirusso.dailypulse.sources.domain.models.Source
 
 class SourcesRepositoryImpl(
     private val localDataSource: SourcesLocalDataSource,

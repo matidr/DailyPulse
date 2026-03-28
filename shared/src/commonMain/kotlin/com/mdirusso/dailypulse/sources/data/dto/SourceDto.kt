@@ -1,7 +1,7 @@
 package com.mdirusso.dailypulse.sources.data.dto
 
+import com.mdirusso.dailypulse.sources.domain.models.Source
 import kotlinx.serialization.Serializable
-import mdirusso.dailypulse.db.Source
 
 @Serializable
 data class SourceDto(
@@ -11,5 +11,5 @@ data class SourceDto(
     val country: String?
 ) {
     fun toDomain() =
-        Source(name.orEmpty(), description.orEmpty(), language.orEmpty(), country.orEmpty())
+        Source(name.orEmpty(), description, language.orEmpty(), country.orEmpty())
 }

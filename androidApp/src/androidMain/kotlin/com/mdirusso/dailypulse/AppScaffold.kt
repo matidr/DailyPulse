@@ -13,6 +13,8 @@ import com.mdirusso.dailypulse.articles.presentation.ArticlesViewModel
 import com.mdirusso.dailypulse.screens.AboutScreen
 import com.mdirusso.dailypulse.screens.ArticlesScreen
 import com.mdirusso.dailypulse.screens.Screens
+import com.mdirusso.dailypulse.screens.SourcesScreen
+import com.mdirusso.dailypulse.sources.presentation.SourcesViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -43,11 +45,18 @@ fun AppNavHost(
             val viewmodel: ArticlesViewModel = koinViewModel()
             ArticlesScreen(
                 onAboutButtonScreen = { navController.navigate(Screens.About) },
+                onSourcesButtonScreen = { navController.navigate(Screens.Sources) },
                 articlesViewModel = viewmodel
             )
         }
         composable<Screens.About> {
             AboutScreen(onUpButtonClick = { navController.popBackStack() })
+        }
+        composable<Screens.Sources> {
+            val viewModel: SourcesViewModel = koinViewModel()
+            SourcesScreen(viewModel) {
+                navController.popBackStack()
+            }
         }
     }
 }

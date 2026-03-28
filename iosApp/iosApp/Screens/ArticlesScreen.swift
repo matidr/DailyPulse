@@ -39,7 +39,7 @@ struct ArticlesScreen: View {
 }
 
 struct ArticleItemView: View {
-    var article: Article
+    var article: ArticleUiModel
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             AsyncImage(url: URL(string: article.imageUrl)) { phase in

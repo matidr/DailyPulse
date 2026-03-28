@@ -1,6 +1,6 @@
 package com.mdirusso.dailypulse.sources.domain
 
-import mdirusso.dailypulse.db.Source
+import com.mdirusso.dailypulse.sources.domain.models.Source
 
 interface SourcesRepository {
 

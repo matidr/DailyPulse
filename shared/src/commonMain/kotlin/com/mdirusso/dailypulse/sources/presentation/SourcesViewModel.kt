@@ -29,7 +29,7 @@ class SourcesViewModel(private val useCase: SourcesUseCase) :
                 ?: SourcesState.Success(isRefreshing = true)
             changeState(refreshing)
             runCatching { useCase.getAllSources(forceFetch) }
-                .onSuccess { sources -> changeState(SourcesState.Success(sources, false)) }
+                .onSuccess { sources -> changeState(SourcesState.Success(sources.map { it.toUiModel() }, false)) }
                 .onFailure { e -> changeState(SourcesState.Error(e.message.orEmpty())) }
         }
     }

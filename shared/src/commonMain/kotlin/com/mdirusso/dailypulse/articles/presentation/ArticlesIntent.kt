@@ -6,4 +6,6 @@ sealed class ArticlesIntent : ViewIntent {
     data object GetArticles : ArticlesIntent()
     data object RefreshArticles : ArticlesIntent()
     data object ShowAbout : ArticlesIntent()
+
+    data object ShowSources: ArticlesIntent()
 }

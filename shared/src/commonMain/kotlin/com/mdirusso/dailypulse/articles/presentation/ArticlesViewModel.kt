@@ -16,12 +16,14 @@ class ArticlesViewModel(private val useCase: ArticlesUseCase) :
         ArticlesIntent.GetArticles -> ArticlesAction.GetArticles(forceFetch = false)
         ArticlesIntent.RefreshArticles -> ArticlesAction.GetArticles(forceFetch = true)
         ArticlesIntent.ShowAbout -> ArticlesAction.ShowAbout
+        ArticlesIntent.ShowSources -> ArticlesAction.ShowSources
     }
 
     override fun handleAction(action: ArticlesAction) {
         when (action) {
             is ArticlesAction.GetArticles -> fetchArticles(action.forceFetch)
             ArticlesAction.ShowAbout -> triggerEffect(ArticlesEffect.NavigateToAbout)
+            ArticlesAction.ShowSources -> triggerEffect(ArticlesEffect.NavigateToSources)
         }
     }
 
@@ -31,7 +33,7 @@ class ArticlesViewModel(private val useCase: ArticlesUseCase) :
                 ?: ArticlesState.Success(isRefreshing = true)
             changeState(refreshing)
             runCatching { useCase.getArticles(forceFetch) }
-                .onSuccess { articles -> changeState(ArticlesState.Success(articles, false)) }
+                .onSuccess { articles -> changeState(ArticlesState.Success(articles.map { it.toUiModel() }, false)) }
                 .onFailure { e -> changeState(ArticlesState.Error(e.message.orEmpty())) }
         }
     }

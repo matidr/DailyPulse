@@ -4,4 +4,6 @@ import com.mdirusso.dailypulse.common.presentation.ViewEffect
 
 sealed class ArticlesEffect : ViewEffect {
     data object NavigateToAbout : ArticlesEffect()
+
+    data object NavigateToSources: ArticlesEffect()
 }

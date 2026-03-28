@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,14 +30,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.mdirusso.dailypulse.articles.domain.models.Article
+import com.mdirusso.dailypulse.articles.presentation.ArticleUiModel
 import com.mdirusso.dailypulse.articles.presentation.ArticlesEffect
 import com.mdirusso.dailypulse.articles.presentation.ArticlesIntent
 import com.mdirusso.dailypulse.articles.presentation.ArticlesState
 import com.mdirusso.dailypulse.articles.presentation.ArticlesViewModel
 
 @Composable
-fun ArticlesScreen(articlesViewModel: ArticlesViewModel, onAboutButtonScreen: () -> Unit) {
+fun ArticlesScreen(
+    articlesViewModel: ArticlesViewModel,
+    onAboutButtonScreen: () -> Unit,
+    onSourcesButtonScreen: () -> Unit
+) {
 
     val articlesState = articlesViewModel.state.collectAsStateWithLifecycle()
 
@@ -44,12 +49,19 @@ fun ArticlesScreen(articlesViewModel: ArticlesViewModel, onAboutButtonScreen: ()
         articlesViewModel.effect.collect { effect ->
             when (effect) {
                 ArticlesEffect.NavigateToAbout -> onAboutButtonScreen()
+                ArticlesEffect.NavigateToSources -> onSourcesButtonScreen()
             }
         }
     }
 
     Column {
-        AppBar { articlesViewModel.dispatchIntent(ArticlesIntent.ShowAbout) }
+        AppBar(
+            onAboutClick = { articlesViewModel.dispatchIntent(ArticlesIntent.ShowAbout) },
+            onSourcesClick = {
+                articlesViewModel.dispatchIntent(
+                    ArticlesIntent.ShowSources
+                )
+            })
         when (val state = articlesState.value) {
             is ArticlesState.Error -> ErrorMessage(state.errorMessage)
             is ArticlesState.Success -> ArticlesListView(state) {
@@ -61,8 +73,14 @@ fun ArticlesScreen(articlesViewModel: ArticlesViewModel, onAboutButtonScreen: ()
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(onAboutClick: () -> Unit) {
+fun AppBar(onAboutClick: () -> Unit, onSourcesClick: () -> Unit) {
     TopAppBar(title = { Text(text = "Articles") }, actions = {
+        IconButton(onClick = onSourcesClick) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.List,
+                contentDescription = "Sources Button"
+            )
+        }
         IconButton(onClick = onAboutClick) {
             Icon(imageVector = Icons.Outlined.Info, contentDescription = "About Device Button")
         }
@@ -81,7 +99,7 @@ fun ArticlesListView(articlesState: ArticlesState.Success, onRefresh: () -> Unit
 }
 
 @Composable
-fun ArticleItemView(article: Article) {
+fun ArticleItemView(article: ArticleUiModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
